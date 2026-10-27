@@ -1,6 +1,6 @@
 import express from 'express'
 import pg from 'pg'
-import Joi from 'joi'
+import joi from 'joi'
 
 const app = express()
 const port = 3000
@@ -103,3 +103,15 @@ function validateIdParam(schema) {
         next()
     }
 }
+
+app.get('/', async (req, res) => {
+    const result = await pool.query(
+        'SELECT * FROM biodata ORDER BY id'
+    )
+
+    return successResponse(
+        res,
+        'Data berhasil diambil',
+        result.rows
+    )
+})
